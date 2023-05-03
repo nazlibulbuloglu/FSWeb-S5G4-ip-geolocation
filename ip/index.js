@@ -1,5 +1,5 @@
 //axios import buraya gelecek
-
+import axios from 'axios';
 var benimIP;
 
 
@@ -31,6 +31,7 @@ async function ipAdresimiAl(){
 	ADIM 5'e gelene kadar fonksiyonunuzu test etmek için ip nizi URL'ye manuel olarak ekleyebilirsiniz.
 */
 
+  
 /*
 	ADIM 2: Geri döndürülen verileri inceleyin, bu sizin ip bilgileriniz! Bileşen fonksiyonunuzu geliştirmek içindeki bu veri yapısını
 	iyice anlamanız gerekmektedir.
@@ -53,11 +54,61 @@ async function ipAdresimiAl(){
 	</div>
     </div>
 */
+ipAdresimiAl().then(function() {
+
+
+	function createCard(data) {
+
+		const divClass = document.createElement('div');
+		divClass.setAttribute('class', "card" )
+	
+		const countryFlag = document.createElement('img');
+		countryFlag.setAttribute('src', data.ülkebayrağı);
+		divClass.append(countryFlag);
+	
+		const cardInfo = document.createElement('div');
+		cardInfo.classList.add('card-info');
+		divClass.append(cardInfo);
+	
+		const ip = document.createElement('h3');
+		ip.textContent = data.sorgu;
+		cardInfo.append(ip);
+	
+		const country = document.createElement('p');
+		country.textContent = `${data.ülke} (${data.ülkeKodu})`;
+		cardInfo.append(country);
+	
+		const latLong = document.createElement('p');
+		latLong.textContent = `Enlem : ${data.enlem} Boylam : ${data.boylam}`;
+		cardInfo.append(latLong);
+	
+		const city = document.createElement('p');
+		city.textContent ="Şehir: " + data.şehir;
+		cardInfo.append(city);
+	
+		const time = document.createElement('p');
+		time.textContent = "Saat Dilimi: " + data.saatdilimi;
+		cardInfo.append(time);
+	
+		const currency = document.createElement('p');
+		currency.textContent ="Para Birimi: " + data.parabirimi;
+		cardInfo.append(currency);
+	
+		const isp = document.createElement('p');
+		isp.textContent = "ISP: " + data.isp;
+		cardInfo.append(isp);
+	
+		return divClass;
+			
+	  }
+	
 
 /*
 	ADIM 4: API'den alınan verileri kullanarak ADIM 3'te verilen yapıda bir kart oluşturun ve 
 	bu kartı DOM olarak .cards elementinin içine ekleyin. 
 */
+
+
 
 /*
 	ADIM 5: Manuel olarak eklediğiniz IP adresini dinamiğe dönüştürün. 
@@ -67,6 +118,28 @@ async function ipAdresimiAl(){
 	Örnek dinamik URL kullanımı: var url = "https://apis.ergineer.com/ipgeoapi/"+benimIP; 
 */
 
+  
 
 
 //kodlar buraya gelecek
+
+
+	  const card = document.querySelector(".cards")
+	
+	axios.get(`https://apis.ergineer.com/ipgeoapi/`+ benimIP)
+	.then(response => {
+	  const data = response.data;
+	  console.log(data); 
+	  card.append(createCard(data));
+	})
+	.catch(error => {
+	  console.log(error);
+	});
+	});
+	
+	
+	
+	
+	
+	
+	
